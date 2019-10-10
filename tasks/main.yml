@@ -1,2 +1,2 @@
 ---
-# tasks file for evergreenils-evergreen
+- import_tasks: postgresql.yml
