@@ -13,13 +13,13 @@ vim:et:ts=4:sw=4:
         <default_locale>en-US</default_locale>
 
         <dirs>
-            <log>LOCALSTATEDIR/log</log> <!-- unix::server log files -->
-            <sock>LOCALSTATEDIR/lock</sock> <!-- unix::server sock files -->
-            <pid>LOCALSTATEDIR/run</pid>
-            <xsl>LOCALSTATEDIR/xsl</xsl>
-            <script>LOCALSTATEDIR</script>
-            <script_lib>LOCALSTATEDIR</script_lib>
-            <templates>LOCALSTATEDIR/templates</templates>
+            <log>{{ opensrf_install_prefix }}/var/log</log> <!-- unix::server log files -->
+            <sock>{{ opensrf_install_prefix }}/var/lock</sock> <!-- unix::server sock files -->
+            <pid>{{ opensrf_install_prefix }}/var/run</pid>
+            <xsl>{{ opensrf_install_prefix }}/var/xsl</xsl>
+            <script>{{ opensrf_install_prefix }}/var</script>
+            <script_lib>{{ opensrf_install_prefix }}/var</script_lib>
+            <templates>{{ opensrf_install_prefix }}/var/templates</templates>
         </dirs>
 
         <!-- global data visibility settings -->
@@ -30,31 +30,31 @@ vim:et:ts=4:sw=4:
             </user>
         </share>
 
-        <IDL>SYSCONFDIR/fm_IDL.xml</IDL> <!-- top level IDL file -->
+        <IDL>{{ opensrf_install_prefix }}/conf/fm_IDL.xml</IDL> <!-- top level IDL file -->
         <IDL2js>fm_IDL2js.xsl</IDL2js> <!-- IDL JS XSLT -->
 
 
         <server_type>prefork</server_type> <!-- net::server type -->
 
-        <ils_events>LOCALSTATEDIR/data/ils_events.xml</ils_events> <!-- ILS events description file -->
+        <ils_events>{{ opensrf_install_prefix }}/var/data/ils_events.xml</ils_events> <!-- ILS events description file -->
 
         <email_notify> <!-- this will eventually move into the notifications section below... -->
             <!-- global email notification settings -->
-            <template>LOCALSTATEDIR/data/hold_notification_template.example</template>
-            <smtp_server>localhost</smtp_server>
+            <template>{{ opensrf_install_prefix }}/var/data/hold_notification_template.example</template>
+            <smtp_server>{{ evergreen_smtp_server }}</smtp_server>
 
             <!--
             in most cases, this is overridden by location 
             specific config settings.  this is just the default
             -->
-            <sender_address>evergreen@localhost</sender_address>
+            <sender_address>{{ evergreen_sender_address }}</sender_address>
         </email_notify>
 
 
       <notifications>
         <!-- global mail server settings -->
-        <smtp_server>localhost</smtp_server>
-        <sender_address>evergreen@localhost</sender_address>
+        <smtp_server>{{ evergreen_smtp_server }}</smtp_server>
+        <sender_address>{{ evergreen_sender_address }}</sender_address>
 
         <!-- global telephony (asterisk) settings -->
         <telephony>
@@ -97,8 +97,8 @@ vim:et:ts=4:sw=4:
 
             <!-- The system can generate an XML file of overdue notices.  This is the
                 directory where they are stored.  Files are named overdue.YYYY-MM-DD.xml -->
-            <notice_dir>LOCALSTATEDIR/data/overdue</notice_dir>
-            <combined_template>LOCALSTATEDIR/data/templates/overdue_combined_xml.example</combined_template>
+            <notice_dir>{{ opensrf_install_prefix }}/var/data/overdue</notice_dir>
+            <combined_template>{{ opensrf_install_prefix }}/var/data/templates/overdue_combined_xml.example</combined_template>
 
             <notice>
                 <!-- Notify at 7 days overdue -->
@@ -109,7 +109,7 @@ vim:et:ts=4:sw=4:
                 <!-- do we attempt email notification? -->
                 <email_notify>false</email_notify>
                 <!-- notice template file -->
-                <email_template>LOCALSTATEDIR/data/templates/overdue_7day.example</email_template>
+                <email_template>{{ opensrf_install_prefix }}/var/data/templates/overdue_7day.example</email_template>
             </notice>
         </overdue>
 
@@ -125,7 +125,7 @@ vim:et:ts=4:sw=4:
                 <notify_interval>1 day</notify_interval>
                 <file_append>false</file_append>
                 <email_notify>false</email_notify>
-                <email_template>LOCALSTATEDIR/data/templates/predue_1day.example</email_template>
+                <email_template>{{ opensrf_install_prefix }}/var/data/templates/predue_1day.example</email_template>
             </notice>
         </predue>
       </notifications>
@@ -137,13 +137,13 @@ vim:et:ts=4:sw=4:
                  hold requests, but with diminishing returns after a point;
                  if increasing this value, it is recommend to do so slowly
             -->
-            <parallel>1</parallel>
+            <parallel>{{ evergreen_hold_targeter_processes }}</parallel>
         </hold_targeter>
 
         <!-- Settings for the fine generator cron job -->
         <fine_generator>
             <!-- number of parallel processes to use during fine generation -->
-            <parallel>1</parallel>
+            <parallel>{{ evergreen_fine_generator_processes }}</parallel>
         </fine_generator>
         
         <reporter>
@@ -172,9 +172,9 @@ vim:et:ts=4:sw=4:
                 </state_store>
                 <files>
                     <!-- successful report outputs go here -->
-                    <output_base>LOCALSTATEDIR/web/reporter</output_base>
-                    <success_template>LOCALSTATEDIR/data/report-success</success_template>
-                    <fail_template>LOCALSTATEDIR/data/report-fail</fail_template>
+                    <output_base>{{ opensrf_install_prefix }}/var/web/reporter</output_base>
+                    <success_template>{{ opensrf_install_prefix }}/var/data/report-success</success_template>
+                    <fail_template>{{ opensrf_install_prefix }}/var/data/report-fail</fail_template>
                 </files>
                 <!-- Number of reports that can be processed simultaneously.  This
                      value can overriden by the -c/-concurrency command-line switch
@@ -593,11 +593,11 @@ vim:et:ts=4:sw=4:
                             If no dictionaries are defined, the default Aspell dictionary is used.
                         -->
                         <!--
-                        <default>LOCALSTATEDIR/data/default_dict.txt</default>
-                        <title>LOCALSTATEDIR/data/title_dict.txt</title>
-                        <author>LOCALSTATEDIR/data/author_dict.txt</author>
-                        <subject>LOCALSTATEDIR/data/subject_dict.txt</subject>
-                        <series>LOCALSTATEDIR/data/series_dict.txt</series>
+                        <default>{{ opensrf_install_prefix }}/var/data/default_dict.txt</default>
+                        <title>{{ opensrf_install_prefix }}/var/data/title_dict.txt</title>
+                        <author>{{ opensrf_install_prefix }}/var/data/author_dict.txt</author>
+                        <subject>{{ opensrf_install_prefix }}/var/data/subject_dict.txt</subject>
+                        <series>{{ opensrf_install_prefix }}/var/data/series_dict.txt</series>
                         -->
                     </spelling_dictionary>
 
@@ -686,7 +686,7 @@ vim:et:ts=4:sw=4:
                     <max_superpages>100</max_superpages>
 
                     <!-- zip code database file -->
-                    <!--<zips_file>LOCALSTATEDIR/data/zips.txt</zips_file>-->
+                    <!--<zips_file>{{ opensrf_install_prefix }}/var/data/zips.txt</zips_file>-->
                 </app_settings>
             </open-ils.search>
 
@@ -752,7 +752,7 @@ vim:et:ts=4:sw=4:
                 </unix_config>
                 <app_settings>
                     <marctemplates>
-                        <K_book>LOCALSTATEDIR/templates/marc/k_book.xml</K_book>
+                        <K_book>{{ opensrf_install_prefix }}/var/templates/marc/k_book.xml</K_book>
                     </marctemplates>
                 </app_settings>
             </open-ils.cat>
@@ -918,7 +918,7 @@ vim:et:ts=4:sw=4:
                 </unix_config>
                 <app_settings>
                     <script_path>LIBDIR/javascript/</script_path>
-                    <script_path>LOCALSTATEDIR/catalog/</script_path>
+                    <script_path>{{ opensrf_install_prefix }}/var/catalog/</script_path>
                     <scripts>
                         <biblio_fingerprint>biblio_fingerprint.js</biblio_fingerprint>
                     </scripts>
@@ -987,7 +987,7 @@ vim:et:ts=4:sw=4:
                 </unix_config>
 
                 <app_settings>
-                    <IDL>SYSCONFDIR/fm_IDL.xml</IDL>
+                    <IDL>{{ opensrf_install_prefix }}/conf/fm_IDL.xml</IDL>
                     <driver>pgsql</driver>
                     <database>
                         <type>master</type>

@@ -2,6 +2,11 @@
 opensrf_install_prefix: '/openils'
 opensrf_system_user: 'opensrf'
 
+evergreen_smtp_server: localhost
+evergreen_sender_address: 'notices@evergreen.localhost'
+evergreen_hold_targeter_processes: 4
+evergreen_fine_generator_processes: 1
+
 postgresql_version: 9.6
 postgresql_install_repository: true
 
