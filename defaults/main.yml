@@ -76,7 +76,7 @@ evergreen_psql_apt_requirements:
   - libxml-libxml-perl
   - libxml-libxslt-perl
 
-postgresql_version: 9.6
+postgresql_version: 10
 postgresql_install_repository: true
 
 # APT settings
