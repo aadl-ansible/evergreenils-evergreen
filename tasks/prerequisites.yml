@@ -1,0 +1,6 @@
+---
+- name: Ensure Evergreen prerequisites are installed
+  apt:
+    name: "{{ evergreen_apt_requirements }}"
+    state: present
+    cache_valid_time: 3600
