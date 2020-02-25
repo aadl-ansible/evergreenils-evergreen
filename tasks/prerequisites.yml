@@ -3,4 +3,12 @@
   apt:
     name: "{{ evergreen_apt_requirements }}"
     state: present
-    cache_valid_time: 3600
+    cache_valid_time: '3600'
+- name: Check if OpenSRF config exists
+  stat:
+    path: "/{{ opensrf_install_prefix }}/conf/opensrf.xml"
+  register: opensrf_config
+- name: Fail out if OpenSRF config doesn't exist
+  fail:
+    msg: "OpenSRF doesn't seem to be installed. Install OpenSRF before Evergreen."
+  when: not opensrf_config.stat.exists
