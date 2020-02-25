@@ -59,7 +59,6 @@ evergreen_apt_requirements:
   - libuniversal-require-perl
   - libunix-syslog-perl
   - libyaz-dev
-  - postgresql-client-9.6
   - libsoap-lite-perl
   - libbz2-dev
   - libparse-recdescent-perl
