@@ -6,7 +6,7 @@
     cache_valid_time: '3600'
 - name: Check if OpenSRF config exists
   stat:
-    path: "/{{ opensrf_install_prefix }}/conf/opensrf.xml"
+    path: "{{ opensrf_install_prefix }}/conf/opensrf.xml"
   register: opensrf_config
 - name: Fail out if OpenSRF config doesn't exist
   fail:
