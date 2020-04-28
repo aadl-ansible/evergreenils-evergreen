@@ -1,0 +1,33 @@
+---
+# Configure and compile as the OpenSRF User
+- name: Configure the Evergreen source
+  command: "./configure {{ evergreen_configure_options }}"
+  args:
+    chdir: "{{ evergreen_src_directory }}"
+    creates: "{{ evergreen_src_directory }}/Makefile"
+  become: true
+  become_user: "{{ opensrf_system_user }}"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:{{ opensrf_install_prefix }}/bin"
+  register: evergreen_src_configured
+- name: Compile Evergreen source
+  make:
+    chdir: "{{ evergreen_src_directory }}"
+  become: true
+  become_user: "{{ opensrf_system_user }}"
+  register: evergreen_compiled
+  when: evergreen_src_configured is changed
+- name: Install Evergreen
+  make:
+    chdir: "{{ evergreen_src_directory }}"
+    target: install
+  when: evergreen_compiled is changed and evergreen_compiled is succeeded
+  register: evergreen_installed
+  notify: ldconfig
+- name: Make sure permissions are right
+  file:
+    state: directory
+    recurse: yes
+    owner: "{{ opensrf_system_user }}"
+    group: "{{ opensrf_system_user }}"
+    path: "{{ opensrf_install_prefix }}"
