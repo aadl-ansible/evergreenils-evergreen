@@ -12,3 +12,11 @@
     name: "{{ evergreen_apt_requirements }}"
     state: present
     cache_valid_time: '3600'
+- name: Download and unpack Evergreen tarball
+  unarchive:
+    src: "{{ evergreen_download_url }}"
+    dest: "/home/{{ opensrf_system_user }}"
+    owner: "{{ opensrf_system_user }}"
+    group: "{{ opensrf_system_user }}"
+    remote_src: yes
+    creates: "{{ evergreen_src_directory }}/Open-ILS/src/extras/Makefile.common"
