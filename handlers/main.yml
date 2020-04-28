@@ -1,2 +1,4 @@
 ---
-# handlers file for evergreenils-evergreen
+- name: ldconfig
+  command: ldconfig
+  become: true
