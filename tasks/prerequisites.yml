@@ -19,4 +19,4 @@
     owner: "{{ opensrf_system_user }}"
     group: "{{ opensrf_system_user }}"
     remote_src: yes
-    creates: "{{ evergreen_src_directory }}/Open-ILS/src/extras/Makefile.common"
+    creates: "{{ evergreen_src_directory }}/Open-ILS/src/extras/install/Makefile.common"

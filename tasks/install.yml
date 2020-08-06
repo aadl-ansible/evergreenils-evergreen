@@ -31,3 +31,18 @@
     owner: "{{ opensrf_system_user }}"
     group: "{{ opensrf_system_user }}"
     path: "{{ opensrf_install_prefix }}"
+- name: Template out eg.conf for Apache
+  template:
+    src: eg.conf.j2
+    dest: /etc/apache2/sites-available/eg.conf
+  become: true
+- name: Template out eg_vhost.conf for Apache
+  template:
+    src: eg_vhost.conf.j2
+    dest: /etc/apache2/eg_vhost.conf
+  become: true
+- name: Template out eg_startup for Apache
+  template:
+    src: eg_startup.j2
+    dest: /etc/apache2/eg_startup
+  become: true
