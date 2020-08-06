@@ -13,6 +13,8 @@ evergreen_sender_address: 'notices@evergreen.localhost'
 evergreen_hold_targeter_processes: 4
 evergreen_fine_generator_processes: 1
 
+evergreen_offline_cdir: '10.0.0.0/8'
+
 evergreen_apt_requirements:
   - apache2-dev
   - aspell
