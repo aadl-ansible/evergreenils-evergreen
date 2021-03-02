@@ -58,7 +58,7 @@ Alias /cgi-bin/offline/ "{{ opensrf_install_prefix }}/var/cgi-bin/offline/"
 	AddHandler cgi-script .cgi .pl
 	AllowOverride None
 	Options None
-    Require host 10.0.0.0/8
+    Require host {{ evergreen_offline_cdir }}
 	Options FollowSymLinks ExecCGI Indexes
 </Directory>
 
