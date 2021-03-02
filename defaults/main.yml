@@ -70,6 +70,8 @@ evergreen_apt_requirements:
   - libsoap-lite-perl
   - libbz2-dev
   - libparse-recdescent-perl
+  - libhtml-defang-perl
+  - libconfig-general-perl
   - yaz
 
 evergreen_psql_apt_requirements:
